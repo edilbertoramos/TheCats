@@ -8,7 +8,7 @@
 import Foundation
 
 struct FeedResult: Codable {
-    let id: String?
+    let id: String
     let url: String?
     let width: Int?
     let height: Int?

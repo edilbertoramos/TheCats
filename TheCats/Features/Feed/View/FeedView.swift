@@ -25,7 +25,7 @@ struct FeedView: View {
                 }
                 
                 ScrollView {
-                    LazyVGrid(columns: columns) {
+                    LazyVGrid(columns: columns, spacing: 8) {
                         ForEach(viewModel.results, id: \.id) { result in
                             NavigationLink(
                                 destination: FeedDetailView(
@@ -37,16 +37,22 @@ struct FeedView: View {
                                 FeedCardView(
                                     data: FeedCardData.create(of: result)
                                 )
+                                .task {
+                                    if viewModel.hasReachedEnd(of: result) && !viewModel.isFetching {
+                                        viewModel.fetchNextPage()
+                                    }
+                                }
                             }
                         }
                     }
                     .padding()
                     
                     ProgressView()
-                        .opacity(viewModel.isLoading ? 1.0 : 0.0)
+                        .opacity(viewModel.isLoading || viewModel.isFetching ? 1.0 : 0.0)
                 }
             }
             .navigationTitle("The Cats")
+            .background(Color.gray.opacity(0.2))
         }
         .navigationBarTitleDisplayMode(.large)
     }

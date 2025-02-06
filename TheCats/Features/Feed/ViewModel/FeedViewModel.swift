@@ -12,11 +12,21 @@ class FeedViewModel: ObservableObject {
     
     @Published var results: [FeedResult] = [FeedResult]()
     @Published var errorMessage: String?
-    @Published var isLoading: Bool = false
-
+    @Published private(set) var viewState: ViewState?
+    
+    private(set) var page = 0
     private var cancellables = Set<AnyCancellable>()
     private let service: FeedServiceProtocol
-
+    
+    var isLoading: Bool {
+        viewState == .loading
+    }
+    
+    var isFetching: Bool {
+        viewState == .fetching
+    }
+    
+    
     init(service: FeedServiceProtocol = FeedService()) {
         self.service = service
         getItems()
@@ -24,17 +34,18 @@ class FeedViewModel: ObservableObject {
     
     func getItems() {
         Future<[FeedResult], Error> { [weak self] promise in
-            self?.isLoading = true
+            guard let self else {
+                return
+            }
+            self.viewState = self.page > 0 ? .fetching : .loading
             Task {
                 do {
-                    let response = try await self?.service.feed(page: 1)
-                    switch response?.result {
+                    let response = try await self.service.feed(page: self.page)
+                    switch response.result {
                     case .success(let result):
                         promise(.success(result))
                     case .failure(let error):
                         promise(.failure(error))
-                    case .none:
-                        break
                     }
                 } catch {
                     promise(.failure(error))
@@ -50,12 +61,29 @@ class FeedViewModel: ObservableObject {
             case .finished:
                 break
             }
-            self?.isLoading = false
+            self?.viewState = .finished
         } receiveValue: { [weak self] results in
-            self?.results = results
-            self?.isLoading = false
+            self?.results.append(contentsOf: results)
+            self?.viewState = .finished
+            self?.page += 1
         }
         .store(in: &cancellables)
     }
     
+    func hasReachedEnd(of result: FeedResult) -> Bool {
+        results.last?.id == result.id
+    }
+    
+    func fetchNextPage() {
+        getItems()
+    }
+    
+}
+
+extension FeedViewModel {
+    enum ViewState {
+        case fetching
+        case loading
+        case finished
+    }
 }
