@@ -34,7 +34,7 @@ public extension ServiceHelper {
 
     static func get<T: Codable>(url: String, parameters: [String: Any]? = nil, headers: [String: String]? = nil) async throws -> ServiceResult<T> {
         let url = addParams(parameters, onUrl: url)
-        let request = try makeRequest(url: url, method: .get)
+        let request = try makeRequest(url: url, method: .get, headers: headers)
         
         return try await withUnsafeThrowingContinuation { continuation in
             let urlSessionTask = URLSession
