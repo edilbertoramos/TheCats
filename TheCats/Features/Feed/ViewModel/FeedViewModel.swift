@@ -26,18 +26,16 @@ class FeedViewModel: ObservableObject {
         viewState == .fetching
     }
     
-    
     init(service: FeedServiceProtocol = FeedService()) {
         self.service = service
-        getItems()
     }
     
-    func getItems() {
+    private func getItems() {
         Future<[FeedResult], Error> { [weak self] promise in
-            guard let self else {
-                return
-            }
+            guard let self else { return }
+            
             self.viewState = self.page > 0 ? .fetching : .loading
+            
             Task {
                 do {
                     let response = try await self.service.feed(page: self.page)
@@ -65,7 +63,6 @@ class FeedViewModel: ObservableObject {
         } receiveValue: { [weak self] results in
             self?.results.append(contentsOf: results)
             self?.viewState = .finished
-            self?.page += 1
         }
         .store(in: &cancellables)
     }
@@ -74,7 +71,19 @@ class FeedViewModel: ObservableObject {
         results.last?.id == result.id
     }
     
+    func reset() {
+        page = 0
+        results.removeAll()
+        errorMessage = nil
+    }
+    
+    func fetchItems() {
+        reset()
+        getItems()
+    }
+    
     func fetchNextPage() {
+        page += 1
         getItems()
     }
     

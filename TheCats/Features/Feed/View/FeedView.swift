@@ -54,6 +54,9 @@ struct FeedView: View {
             .navigationTitle("The Cats")
             .background(Color.gray.opacity(0.2))
         }
+        .onAppear {
+            viewModel.fetchItems()
+        }
         .navigationBarTitleDisplayMode(.large)
     }
 }
