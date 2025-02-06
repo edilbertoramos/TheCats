@@ -12,6 +12,7 @@ struct AppConfig {
     enum Parameter: String {
         case baseUrl = "BASE_URL"
         case connectionProtocol = "CONNECTION_PROTOCOL"
+        case xApiKey = "X_API_KEY"
     }
     
     static var baseUrl: String {
@@ -21,6 +22,10 @@ struct AppConfig {
     
     static var connectionProtocol: String {
         data(from: .connectionProtocol) ?? ""
+    }
+    
+    static var xApiKey: String {
+        data(from: .xApiKey) ?? ""
     }
     
     static func data(from parameter: Parameter) -> String? {

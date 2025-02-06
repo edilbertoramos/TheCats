@@ -10,3 +10,4 @@
 
 CONNECTION_PROTOCOL = https
 BASE_URL = api.thecatapi.com/v1
+X_API_KEY = live_XEy1MgNtBdi7q1DsQuc4dzMKo8suwjI4LA1kgZmOI5J5ywM8H9MHSomNSz4FY8gl
