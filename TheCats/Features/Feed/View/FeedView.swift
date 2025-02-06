@@ -10,9 +10,39 @@ import SwiftUI
 struct FeedView: View {
     
     @StateObject private var viewModel = FeedViewModel()
-
+    
+    @State private var columns: [GridItem] = Array(
+        repeating: GridItem(.flexible()),
+        count: 2
+    )
+    
     var body: some View {
-        Text("FeedView")
+        NavigationStack {
+            VStack {
+                
+                if let error = viewModel.errorMessage {
+                    Text(error)
+                }
+                
+                ScrollView {
+                    LazyVGrid(columns: columns) {
+                        ForEach(viewModel.results, id: \.id) { result in
+                            NavigationLink(destination: EmptyView()) {
+                                FeedCell(
+                                    data: FeedCellData.create(of: result)
+                                )
+                            }
+                        }
+                    }
+                    .padding()
+                    
+                    ProgressView()
+                        .opacity(viewModel.isLoading ? 1.0 : 0.0)
+                }
+            }
+            .navigationTitle("The Cats")
+        }
+        .navigationBarTitleDisplayMode(.large)
     }
 }
 

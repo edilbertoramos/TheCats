@@ -21,7 +21,7 @@ final class FeedService: FeedServiceProtocol {
         parameters["format"] = "json"
         parameters["has_breeds"] = true
         parameters["order"] = "RANDOM"
-        parameters["limit"] = 10
+        parameters["limit"] = 40
         parameters["page"] = page
 
         return try await ServiceHelper.get(
