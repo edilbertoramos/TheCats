@@ -31,7 +31,7 @@ extension FeedDetailData {
     static func create(from result: FeedResult) -> Self {
         let breed = result.breeds?.first
         return FeedDetailData(
-            id: result.id ?? "",
+            id: result.id,
             name: breed?.name ?? "Unknown Breed",
             temperament: breed?.temperament ?? "Unknown Temperament",
             description: breed?.description ?? "No description available",

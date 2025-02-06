@@ -11,33 +11,52 @@ struct FeedCardView: View {
     let data: FeedCardData
     
     var body: some View {
-        VStack {
-            AsyncImage(url: URL(string: data.url ?? "")) { image in
-                image
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 150, height: 150)
-                    .cornerRadius(10)
-            } placeholder: {
-                Color
-                    .gray.opacity(0.1)
-                    .frame(width: 150, height: 150)
-                    .cornerRadius(10)
-                    .overlay {
-                        ProgressView()
-                    }
+        VStack(spacing: .zero) {
+            GeometryReader { proxy in
+                AsyncImage(url: URL(string: data.url ?? "")) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .clipped()
+                } placeholder: {
+                    Color
+                        .gray.opacity(0.1)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .overlay {
+                            ProgressView()
+                        }
+                }
             }
-            Text(data.name ?? "")
-                .font(.headline)
-                .lineLimit(1)
-            Text(data.origin ?? "")
-                .font(.subheadline)
-                .foregroundColor(.gray)
+            .frame(height: UIScreen.main.bounds.width * 0.3)
+            
+            VStack(alignment: .leading, spacing: 0) {
+                Text(data.name ?? "")
+                    .font(.headline)
+                    .lineLimit(1)
+                Text(data.origin ?? "")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
+            .background(Color.white)
         }
-        .padding()
         .background(Color.white)
-        .cornerRadius(15)
-        .shadow(color: Color.gray.opacity(0.5), radius: 5)
+        .clipped()
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: 16,
+                style: .continuous
+            )
+        )
+        .shadow(
+            color: Color.gray.opacity(0.1),
+            radius: 2,
+            x: 0,
+            y: 1
+        )
     }
 }
 

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FeedDetailView: View {
     var data: FeedDetailData
+    @State private var isSafariPresented = false
     
     var body: some View {
         ScrollView {
@@ -56,12 +57,18 @@ struct FeedDetailView: View {
                     .foregroundColor(.primary)
                     .lineSpacing(6)
                 
-                Link("Learn more on Wikipedia", destination: URL(string: data.wikipediaURL)!)
-                    .foregroundColor(.blue)
-                    .padding(.top)
+                
+                Button("Learn more on Wikipedia") {
+                    isSafariPresented.toggle()
+                }
+                .sheet(isPresented: $isSafariPresented) {
+                    SafariView(url: URL(string: data.wikipediaURL)!)
+                }
+                .padding(.top)
             }
             .padding()
         }
+        
         .navigationTitle(data.name)
         .navigationBarTitleDisplayMode(.large)
         .background(Color(UIColor.systemGroupedBackground))
