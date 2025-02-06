@@ -27,9 +27,15 @@ struct FeedView: View {
                 ScrollView {
                     LazyVGrid(columns: columns) {
                         ForEach(viewModel.results, id: \.id) { result in
-                            NavigationLink(destination: EmptyView()) {
-                                FeedCell(
-                                    data: FeedCellData.create(of: result)
+                            NavigationLink(
+                                destination: FeedDetailView(
+                                    data: FeedDetailData.create(
+                                        from: result
+                                    )
+                                )
+                            ) {
+                                FeedCardView(
+                                    data: FeedCardData.create(of: result)
                                 )
                             }
                         }

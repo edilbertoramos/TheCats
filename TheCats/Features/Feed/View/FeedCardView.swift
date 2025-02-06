@@ -1,5 +1,5 @@
 //
-//  FeedCell.swift
+//  FeedCardView.swift
 //  TheCats
 //
 //  Created by Edilberto Ramos on 05/02/25.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct FeedCell: View {
-    let data: FeedCellData
+struct FeedCardView: View {
+    let data: FeedCardData
     
     var body: some View {
         VStack {
@@ -20,9 +20,12 @@ struct FeedCell: View {
                     .cornerRadius(10)
             } placeholder: {
                 Color
-                    .gray
+                    .gray.opacity(0.1)
                     .frame(width: 150, height: 150)
                     .cornerRadius(10)
+                    .overlay {
+                        ProgressView()
+                    }
             }
             Text(data.name ?? "")
                 .font(.headline)
@@ -34,17 +37,13 @@ struct FeedCell: View {
         .padding()
         .background(Color.white)
         .cornerRadius(15)
-        .shadow(radius: 5)
+        .shadow(color: Color.gray.opacity(0.5), radius: 5)
     }
 }
 
 #Preview {
-    FeedCell(
-        data: FeedCellData(
-            url: "https://cdn2.thecatapi.com/images/d55E_KMKZ.jpg",
-            name: "American Bobtail",
-            origin: "United States"
-        )
+    FeedCardView(
+        data: FeedCardData.createMock()
     )
 }
 
