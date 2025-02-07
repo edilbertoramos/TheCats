@@ -9,7 +9,7 @@
 - iOS 17.6
 
 ## Xcode version
-- 16.1+
+- 15.3+
 
 ## Native resources and frameworks
 - Concurrency
