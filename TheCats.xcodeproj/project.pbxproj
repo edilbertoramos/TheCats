@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 71;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
@@ -30,7 +30,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		EB12C9EF2D542A0000E4849D /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		EB12C9EF2D542A0000E4849D /* Exceptions for "TheCats" folder in "TheCats" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -40,9 +40,24 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		EB37EAD82D53EF06002F21DD /* TheCats */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (EB12C9EF2D542A0000E4849D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TheCats; sourceTree = "<group>"; };
-		EB37EAE92D53EF08002F21DD /* TheCatsTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TheCatsTests; sourceTree = "<group>"; };
-		EB37EAF32D53EF08002F21DD /* TheCatsUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TheCatsUITests; sourceTree = "<group>"; };
+		EB37EAD82D53EF06002F21DD /* TheCats */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EB12C9EF2D542A0000E4849D /* Exceptions for "TheCats" folder in "TheCats" target */,
+			);
+			path = TheCats;
+			sourceTree = "<group>";
+		};
+		EB37EAE92D53EF08002F21DD /* TheCatsTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TheCatsTests;
+			sourceTree = "<group>";
+		};
+		EB37EAF32D53EF08002F21DD /* TheCatsUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TheCatsUITests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,7 +200,6 @@
 				};
 			};
 			buildConfigurationList = EB37EAD12D53EF06002F21DD /* Build configuration list for PBXProject "TheCats" */;
-			compatibilityVersion = "Xcode 15.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -194,6 +208,7 @@
 			);
 			mainGroup = EB37EACD2D53EF06002F21DD;
 			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = EB37EAD72D53EF06002F21DD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
