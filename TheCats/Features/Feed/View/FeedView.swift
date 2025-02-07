@@ -16,12 +16,25 @@ struct FeedView: View {
         count: 2
     )
     
+    init() {
+        #if DEBUG
+        if UITestingHelper.isUITesting {
+            _viewModel = StateObject(wrappedValue: FeedViewModel(service: MockFeedService()))
+        } else {
+            _viewModel = StateObject(wrappedValue: FeedViewModel())
+        }
+        #else
+        _viewModel = StateObject(wrappedValue: FeedViewModel())
+        #endif
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
                 
                 if let error = viewModel.errorMessage {
                     Text(error)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 }
                 
                 ScrollView {
@@ -37,6 +50,7 @@ struct FeedView: View {
                                 FeedCardView(
                                     data: FeedCardData.create(of: result)
                                 )
+                                .accessibilityIdentifier("item_\(result.id)")
                                 .task {
                                     if viewModel.hasReachedEnd(of: result) && !viewModel.isFetching {
                                         viewModel.fetchNextPage()
@@ -46,7 +60,8 @@ struct FeedView: View {
                         }
                     }
                     .padding()
-                    
+                    .accessibilityIdentifier("feedGrid")
+
                     ProgressView()
                         .opacity(viewModel.isLoading || viewModel.isFetching ? 1.0 : 0.0)
                 }

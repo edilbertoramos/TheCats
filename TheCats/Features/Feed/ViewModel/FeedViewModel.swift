@@ -54,7 +54,7 @@ class FeedViewModel: ObservableObject {
         .sink { [weak self] completion in
             switch completion {
             case .failure(let error):
-                self?.errorMessage = error.localizedDescription
+                self?.errorMessage = "There was a service failure!"
                 debugPrint(error)
             case .finished:
                 break
